@@ -1,0 +1,2 @@
+# ledger.lite.rb
+ledger
