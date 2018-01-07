@@ -79,6 +79,25 @@ telling you who owns how much:
 
 ### Use `write` to write / add transactions
 
+
+Or use transaction hashes:
+
+``` ruby
+ledger = Ledger.new
+
+ledger.write(   from: "Keukenhof†",  to: "Vincent",  amount: 11 )
+ledger.write(   from: "Vincent",     to: "Anne",     amount:  3 )
+ledger.write(   from: "Anne",        to: "Julia",    amount:  2 )
+ledger.write(   from: "Julia",       to: "Luuk",     amount:  1 )
+
+ledger.write( { from: "Dutchgrown†", to: "Ruben",    amount: 11 },
+              { from: "Vincent",     to: "Max",      amount:  3 },
+              { from: "Ruben",       to: "Julia",    amount:  2 },
+              { from: "Anne",        to: "Martijn",  amount:  1 } )
+
+pp ledger
+```
+
 Or use transaction (tx) classes/structs:
 
 ``` ruby
@@ -88,25 +107,6 @@ ledger.write( Tx.new( "Keukenhof†",  "Vincent", 11 ))
 ledger.write( Tx.new( "Vincent",     "Anne",     3 ))
 ledger.write( Tx.new( "Anne",        "Julia",    2 ))
 ledger.write( Tx.new( "Julia",       "Luuk",     1 ))
-
-ledger.write( Tx.new( "Dutchgrown†", "Ruben",   11 ))
-ledger.write( Tx.new( "Vincent",     "Max",      3 ))
-ledger.write( Tx.new( "Ruben",       "Julia",    2 ))
-ledger.write( Tx.new( "Anne",        "Martijn",  1 ))
-
-pp ledger
-```
-
-
-Or pass in many transaction (Tx) classes/structs:
-
-``` ruby
-ledger = Ledger.new
-
-ledger.write( Tx.new( "Keukenhof†",  "Vincent", 11 ),
-              Tx.new( "Vincent",     "Anne",     3 ),
-              Tx.new( "Anne",        "Julia",    2 ),
-              Tx.new( "Julia",       "Luuk",     1 ))
 
 ledger.write( Tx.new( "Dutchgrown†", "Ruben",   11 ),
               Tx.new( "Vincent",     "Max",      3 ),
@@ -130,24 +130,6 @@ ledger << [Tx.new( "Dutchgrown†", "Ruben",   11 ),
            Tx.new( "Vincent",     "Max",      3 ),
            Tx.new( "Ruben",       "Julia",    2 ),
            Tx.new( "Anne",        "Martijn",  1 )]
-
-pp ledger
-```
-
-Or use transaction hashes:
-
-``` ruby
-ledger = Ledger.new
-
-ledger.write( { from: "Keukenhof†",  to: "Vincent",  amount: 11 },
-              { from: "Vincent",     to: "Anne",     amount:  3 },
-              { from: "Anne",        to: "Julia",    amount:  2 },
-              { from: "Julia",       to: "Luuk",     amount:  1 })
-
-ledger.write( { from: "Dutchgrown†", to: "Ruben",    amount: 11 },
-              { from: "Vincent",     to: "Max",      amount:  3 },
-              { from: "Ruben",       to: "Julia",    amount:  2 },
-              { from: "Anne",        to: "Martijn",  amount:  1 })
 
 pp ledger
 ```
