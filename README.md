@@ -121,10 +121,10 @@ Or use the operator `<<` alias for `write`:
 ```ruby
 ledger = Ledger.new
 
-ledger << Tx.new( "Keukenhof†",  "Vincent", 11 )
-ledger << Tx.new( "Vincent",     "Anne",     3 )
-ledger << Tx.new( "Anne",        "Julia",    2 )
-ledger << Tx.new( "Julia",       "Luuk",     1 )
+ledger <<  Tx.new( "Keukenhof†",  "Vincent", 11 )
+ledger <<  Tx.new( "Vincent",     "Anne",     3 )
+ledger <<  Tx.new( "Anne",        "Julia",    2 )
+ledger <<  Tx.new( "Julia",       "Luuk",     1 )
 
 ledger << [Tx.new( "Dutchgrown†", "Ruben",   11 ),
            Tx.new( "Vincent",     "Max",      3 ),
@@ -139,20 +139,72 @@ Or use transaction hashes:
 ``` ruby
 ledger = Ledger.new
 
-ledger.write( { from: "Keukenhof†", to: "Vincent",  amount: 11 },
-              { from: "Vincent",    to: "Anne",     amount:  3 },
-              { from: "Anne",       to: "Julia",    amount:  2 },
-              { from: "Julia",      to: "Luuk",     amount:  1 })
+ledger.write( { from: "Keukenhof†",  to: "Vincent",  amount: 11 },
+              { from: "Vincent",     to: "Anne",     amount:  3 },
+              { from: "Anne",        to: "Julia",    amount:  2 },
+              { from: "Julia",       to: "Luuk",     amount:  1 })
 
-ledger.write( { from: "Dutchgrown†", to: "Ruben",   amount: 11 },
-              { from: "Vincent",     to: "Max",     amount:  3 },
-              { from: "Ruben",       to: "Julia",   amount:  2 },
-              { from: "Anne",        to: "Martijn", amount:  1 })
+ledger.write( { from: "Dutchgrown†", to: "Ruben",    amount: 11 },
+              { from: "Vincent",     to: "Max",      amount:  3 },
+              { from: "Ruben",       to: "Julia",    amount:  2 },
+              { from: "Anne",        to: "Martijn",  amount:  1 })
 
 pp ledger
 ```
 
 
+Or use blocks of transaction hashes:
+
+``` ruby
+
+ledger = Ledger.new
+
+ledger.write( Block.new( { from: "Keukenhof†",  to: "Vincent",    amount: 11 },
+                         { from: "Vincent",     to: "Anne",       amount:  3 },
+                         { from: "Anne",        to: "Julia",      amount:  2 },
+                         { from: "Julia",       to: "Luuk",       amount:  1 } ),
+              Block.new( { from: "Dutchgrown†", to: "Ruben",      amount: 11 },
+                         { from: "Vincent",     to: "Max",        amount:  3 },
+                         { from: "Ruben",       to: "Julia",      amount:  2 },
+                         { from: "Anne",        to: "Martijn",    amount:  1 } ))
+
+pp ledger
+```
+
+
+Or use blocks of transaction classes/structs:
+
+``` ruby
+ledger = Ledger.new
+
+ledger.write( Block.new( Tx.new( "Keukenhof†",  "Vincent",  11 ),
+                         Tx.new( "Vincent",     "Anne",      3 ),
+                         Tx.new( "Anne",        "Julia",     2 ),
+                         Tx.new( "Julia",       "Luuk",      1 )),
+              Block.new( Tx.new( "Dutchgrown†", "Ruben",    11 ),
+                         Tx.new( "Vincent",     "Max",       3 ),
+                         Tx.new( "Ruben",       "Julia",     2 ),
+                         Tx.new( "Anne",        "Martijn",   1 )))
+
+pp ledger
+```
+
+Or use blocks of transaction classes/structs (with keyword arguments):
+
+```ruby
+ledger = Ledger.new
+
+ledger.write( Block.new( Tx.new( from: "Keukenhof†",  to: "Vincent", amount: 11 ),
+                         Tx.new( from: "Vincent",     to: "Anne",    amount:  3 ),
+                         Tx.new( from: "Anne",        to: "Julia",   amount:  2 ),
+                         Tx.new( from: "Julia",       to: "Luuk",    amount:  1 )),
+              Block.new( Tx.new( from: "Dutchgrown†", to: "Ruben",   amount: 11 ),
+                         Tx.new( from: "Vincent",     to: "Max",     amount:  3 ),
+                         Tx.new( from: "Ruben",       to: "Julia",   amount:  2 ),
+                         Tx.new( from: "Anne",        to: "Martijn", amount:  1 )))
+
+pp ledger
+```
 
 
 
