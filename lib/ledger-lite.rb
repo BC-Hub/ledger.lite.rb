@@ -16,11 +16,57 @@ require 'ledger-lite/version'    # note: let version always go first
 
 module LedgerLite
 
+
+
+class Configuration
+
+  ## system settings
+
+  ##  use a different name e.g.
+  ##  -  mint  (like royal mint or federal coin mint?) or
+  ##  -  base
+  ##  -  magic  (for creating coins out-of-nothing?) or
+  ##  -  network or ??) - why? why not?
+  ##
+  attr_accessor :coinbase
+
+  ##  note: for now is an array (allow/ support multiple coinbases)
+  ##  note: add a (†) coinbase  marker
+  COINBASE = ['Coinbase†']
+
+  def initialize
+    @coinbase = COINBASE
+  end
+
+  def coinbase?( addr )
+    @coinbase.include?( addr )
+  end
+end # class Configuration
+
+
+
+
 class Ledger
   extend Forwardable
 
 
+  ## lets you use
+  ##   Ledger.configure do |config|
+  ##      config.coinbase = ['Keukenhof†']
+  ##   end
+
+  def self.configure
+    yield( config )
+  end
+
+  def self.config
+    @config ||= Configuration.new
+  end
+
+
+
   attr_reader :addr     ## make addr private e.g. remove - why? e.g. use hash forwards/delegates - why not?
+
 
   ## delegate some methods (and operators) to addr hash (for easier/shortcut access)
   def_delegators :@addr, :[], :size, :each, :empty?, :any?
@@ -101,8 +147,8 @@ class Ledger
   # find a better name - why? why not?
   ##  e.g. use can? funds? sufficient? has_funds?
   def sufficient_funds?( addr, amount )
-    ## fix:
-    true
+    return true   if self.class.config.coinbase?( addr )    ## note: coinbase has unlimited funds!!!
+    @addr.has_key?( addr ) && @addr[addr] - amount >= 0
   end
 
 
@@ -111,8 +157,12 @@ class Ledger
   def send( from, to, amount )
 
     if sufficient_funds?( from, amount )
-      @addr[ from ] ||= 0
-      @addr[ from ] -= amount
+      if self.class.config.coinbase?( from )
+        # note: coinbase has unlimited funds!! ("virtual" built-in money printing address)
+      else
+         @addr[ from ] ||= 0
+         @addr[ from ] -= amount
+      end
       @addr[ to ] ||= 0
       @addr[ to ] += amount
     end
@@ -123,6 +173,7 @@ class Ledger
 
 
 end # class Ledger
+
 
 end # module LedgerLite
 

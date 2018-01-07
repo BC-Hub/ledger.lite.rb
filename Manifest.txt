@@ -6,4 +6,6 @@ Rakefile
 lib/ledger-lite.rb
 lib/ledger-lite/version.rb
 test/helper.rb
-test/test_transfer.rb
+test/test_blocks.rb
+test/test_transactions.rb
+test/test_version.rb
