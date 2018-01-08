@@ -190,6 +190,19 @@ pp ledger
 
 
 
+## Ledger Lite in the Real World
+
+- [**centralbank**](https://github.com/openblockchains/centralbank) - command line tool (and core library) - print your own money / cryptocurrency; run your own federated central bank nodes on the blockchain peer-to-peer over HTTP; revolutionize the world one block at a time
+- [**shilling**](https://github.com/bitshilling/bitshilling.tools) - command line tool (and core library) - shilling (or schilling) on the blockchain! rock-solid alpine dollar from austria; print (mine) your own shillings; run your own federated shilling central bank nodes w/ public distributed (hyper) ledger book on the blockchain peer-to-peer over HTTP; revolutionize the world one block at a time
+- You? Add your tool / service
+
+
+
+## References
+
+[**Programming Cryptocurrencies and Blockchains (in Ruby)**](http://yukimotopress.github.io/blockchains) by Gerald Bauer et al, 2018, Yuki & Moto Press
+
+
 ## License
 
 ![](https://publicdomainworks.github.io/buttons/zero88x31.png)
