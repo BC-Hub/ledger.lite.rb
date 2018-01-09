@@ -90,6 +90,11 @@ class Base
     if args.size == 1 && args[0].is_a?( Array )
       puts " unwrap array in array"
       blks_or_txns = args[0]   ## "unwrap" array in array
+    elsif args.size == 1 && defined?( Blockchain ) && args[0].is_a?( Blockchain )
+      ## support passing in of "top-level" defined blockchain class if defined
+      ##  pass along all blocks ("unwrapped" from blockchain)
+      blks_or_txns = []
+      args[0].each { |b| blks_or_txns << b }
     else
       blks_or_txns = args      ## use "auto-wrapped" splat array
     end
