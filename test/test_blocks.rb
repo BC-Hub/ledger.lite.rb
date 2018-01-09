@@ -10,6 +10,8 @@ require 'helper'
 
 class TestBlocks < MiniTest::Test
 
+include V1    # includes Ledger, Tx, etc.
+
 def setup
   Ledger.configure do |config|
      config.coinbase = ["Keukenhof†", "Dutchgrown†"]
